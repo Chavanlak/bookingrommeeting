@@ -32,9 +32,9 @@
                                 <tr>
                                     <th style="text-align: center">ลำดับ</th>
                                     <th style="text-align: center">หัวข้อการประชุม</th>
-                                    <th style="text-align: center">วันที่ใช้งาน</th>
-                                    <th style="text-align: center">เวลาที่จอง</th>
-                                    <th style="text-align: center">เวลาเริ่ม</th>
+                                    <th style="text-align: center">วันที่ใช้ห้อง</th>
+                                    <th style="text-align: center">เวลา</th>
+                                    <th style="text-align: center">เวลาเริ่มต้น</th>
                                     <th style="text-align: center">เวลาสิ้นสุด</th>
                                     <th style="text-align: center">ผู้จอง</th>
                                     <th style="text-align: center">ชื่อห้อง</th>
@@ -48,6 +48,7 @@
                                         <td style="text-align: center">{{$booking->bookingAgenda}}</td>
                                         <td style="text-align: center">{{$booking->bookingDate}}</td>
                                         <td style="text-align: center">{{$booking->bookingTimes ?? 'N/A'}}</td>
+                                        {{-- <td style="text-align: center">{{$booking->bookingTimes ? $booking->bookingTimes->format('H:i:s') : 'N/A'}}</td> --}}
                                         <td style="text-align: center">{{$booking->bookingTimeStart}}</td>
                                         <td style="text-align: center">{{$booking->bookingTimeFinish}}</th>
                                         <td style="text-align: center">{{$booking->userbookingName}}</td>
@@ -125,7 +126,7 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 <script>
     $(document).ready(function () {
@@ -149,7 +150,7 @@
             ]
         });
     });
-</script>
+</script> --}}
 @endsection
 {{-- <script>"https://code.jquery.com/jquery-3.7.1.js"</script>
 <script>"https://cdn.datatables.net/2.1.8/js/dataTables.js"</script>

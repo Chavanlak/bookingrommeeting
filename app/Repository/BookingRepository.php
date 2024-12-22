@@ -15,6 +15,10 @@ class BookingRepository
 
         $bookingTimeStart = Carbon::parse($bookingTimeStart)->format('H:i:s');
         $bookingTimeFinish = Carbon::parse($bookingTimeFinish)->format('H:i:s');
+        // $bookingTimes = Carbon::now($bookingTimes)->format('H:i:s');
+        // var_dump($bookingTimes);
+        // $bookingTimes = now($bookingTimes);
+        
 
         DB::enableQueryLog();
         $isbooking = DB::select('
@@ -31,7 +35,8 @@ class BookingRepository
                     )
                     and booking.roomId = ?
                     and booking.bookingDate = ?
-            ) as result ', [$bookingTimeStart, $bookingTimeStart, $bookingTimeFinish, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $roomId, $bookingDate]);
+                 
+                   ) as result ', [$bookingTimeStart, $bookingTimeStart, $bookingTimeFinish, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $roomId, $bookingDate]);
         if ($isbooking['0']->result == 0) {
             $booking = new Booking();
             $booking->bookingAgenda = $bookingAgenda;
@@ -42,6 +47,7 @@ class BookingRepository
             $booking->userId = $userId;
             $booking->roomId= $roomId;
             $booking->bookingTimes = now();
+           
             return $booking->save();
         }
         return false;
@@ -65,7 +71,7 @@ class BookingRepository
         // )) as result;
 
 
-        DB::enableQueryLog();
+        // dd(DB::enableQueryLog());
         $isbooking = DB::select('
             select exists(
                 select *
@@ -81,6 +87,7 @@ class BookingRepository
                     and booking.roomId = ?
                     and booking.bookingDate = ?
                     and booking.bookingId != ?
+                  
             ) as result ', [$bookingTimeStart, $bookingTimeStart, $bookingTimeFinish, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $bookingTimeStart, $bookingTimeFinish, $roomId, $bookingDate, $bookingId]);
         if ($isbooking['0']->result == 0) {
             $result = Booking::where('bookingId', '=', $bookingId)->update([
@@ -88,6 +95,8 @@ class BookingRepository
                 'bookingDate' => $bookingDate,
                 'bookingTimeStart' => $bookingTimeStart,
                 'bookingTimeFinish' => $bookingTimeFinish
+                
+                
             ]);
             return $result;
         }
@@ -144,7 +153,7 @@ class BookingRepository
         // J = $limit
 
         $k = ((int)$offset-1)*(int)$limit;
-        $bookingDat = Booking::select('booking.bookingId', 'booking.bookingAgenda', 'booking.bookingDate', 'booking.bookingTimeStart', 'booking.bookingTimeFinish', DB::raw('concat(user.firstName," ",user.lastName) as userbookingName'), 'room.roomName')
+        $bookingDat = Booking::select('booking.bookingId', 'booking.bookingAgenda', 'booking.bookingDate', 'booking.bookingTimeStart', 'booking.bookingTimeFinish','booking.bookingTimes', DB::raw('concat(user.firstName," ",user.lastName) as userbookingName'), 'room.roomName')
         ->join('user','booking.userId','=','user.userId')
         ->join('room', 'booking.roomId','=','room.roomId')
         ->where('user.userId','=',$userId)
@@ -157,7 +166,7 @@ class BookingRepository
 
         $bookingList = [];
         foreach($bookingDat as $dat){
-            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName);
+            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName,$dat->bookingTimes);
         }
 
 
@@ -179,7 +188,7 @@ class BookingRepository
         ->get();
         $bookingList = [];
         foreach($bookingDat as $dat){
-            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName);
+            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName,$dat->bookingTimes);
         }
         return $bookingList;
     }
@@ -211,7 +220,7 @@ class BookingRepository
         ->get();
         $bookingList = [];
         foreach($bookingDat as $dat){
-            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName);
+            $bookingList[] = new BookingDTO($dat->bookingId, $dat->bookingAgenda, $dat->bookingDate, $dat->bookingTimeStart, $dat->bookingTimeFinish, $dat->userbookingName, $dat->roomName,$dat->bookingTimes);
         }
 
 

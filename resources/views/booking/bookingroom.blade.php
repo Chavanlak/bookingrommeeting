@@ -11,7 +11,7 @@
                     จองห้องประชุม {{$room->roomName}}
                 </p>
                 @if (session('message'))
-                <h6 class="font-weight-bold text-danger">{{session('message')}}</h6>
+                {{-- <h6 class="font-weight-bold text-danger">{{session('message')}}</h6> --}}
                 @endif
                 <form class="forms-sample"  action="/booking/addbooking" method="post" >
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -29,13 +29,16 @@
                     </div>
                     <div class="form-group">
                         <label for="time">เวลาที่ใช้ห้อง</label>
+                        <h6 class="font-weight-bold text-danger">{{session('message')}}</h6>
                         <div class="row" id="time">
                             <div class="col-sm-6">
-                                <label for="timestart">เวลาเริ่ม</label>
+                                <label for="timestart">เวลาเริ่มต้น</label>
+                                {{-- <h6 class="font-weight-bold text-danger">{{session('message')}}</h6> --}}
                                 <input type="time" class="form-control" id="timestart" name="bookingTimeStart" required>
                             </div>
                             <div class="col-sm-6">
                                 <label for="timeend">เวลาสิ้นสุด</label>
+                                {{-- <h6 class="font-weight-bold text-danger">{{session('message')}}</h6> --}}
                                 <input type="time" class="form-control" id="timeend" name="bookingTimeFinish" required>
                             </div>
                         </div>
@@ -73,8 +76,8 @@
                                 <th style="text-align: center">ลำดับที่</th>
                                 <th style="text-align: center">หัวข้อการประชุม</th>
                                 <th style="text-align: center">วันที่ใช้งาน</th>
-                                <th style="text-align: center">เวลาที่จอง</th>
-                                <th style="text-align: center">เวลาเริ่ม</th>
+                                <th style="text-align: center">เวลา</th>
+                                <th style="text-align: center">เวลาเริ่มต้น</th>
                                 <th style="text-align: center">เวลาสิ้นสุด</th>
                                 <th style="text-align: center">ผู้จอง</th>
                                 {{-- <th>ลบข้อมูลการจอง</th>

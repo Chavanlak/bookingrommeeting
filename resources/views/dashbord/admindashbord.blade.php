@@ -38,6 +38,7 @@
                                     <td style="text-align: center">{{$loop->iteration+((int)$offset-1)*(int)$limit}}</td>
                                     <td style="text-align: center">{{$booking->bookingAgenda}}</td>
                                     <td style="text-align: center">{{$booking->bookingDate}}</td>
+                                    <td style="text-align: center">{{$booking->bookingTimes ?? 'N/A'}}</td>
                                     <td style="text-align: center">{{$booking->bookingTimeStart}}</td>
                                     <td style="text-align: center">{{$booking->bookingTimeFinish}}</th>
                                     <td style="text-align: center">{{$booking->userbookingName}}</td>

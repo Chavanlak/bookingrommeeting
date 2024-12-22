@@ -32,30 +32,37 @@ class BookingController extends Controller
         $bookingDate = $req->bookingDate;
         $bookingTimeStart = Carbon::parse($req->bookingTimeStart);
         $bookingTimeFinish = Carbon::parse($req->bookingTimeFinish);
+        // $bookingTimes = Carbon::now($req->bookingTimes);
+
         $userId = $req->userId;
         $roomId = $req->roomId;
         $dateNow = Carbon::now();
+        // $bookingTimes = now();
         $dateSelect = Carbon::parse($bookingDate." ".$bookingTimeStart->format('H:i:s'));
         $bookingDurationMinutes = $bookingTimeFinish->diffInMinutes($bookingTimeStart);
 
         if ($dateSelect->lt($dateNow)) {
-            return redirect('/booking/' . $roomId)->with('message', 'ไม่สามารถจองย้อนหลังได้');
+            // return redirect('/booking/' . $roomId)->with('message', 'ไม่สามารถจองเวลาย้อนหลังได้');
+            return redirect('/booking/' . $roomId)->with('message', '*');
         }
 
 
         if ($bookingDurationMinutes < 60) {
-            return redirect('/booking/' . $roomId)->with('message', 'ต้องจองเวลาเท่ากับ 1 ชั่วโมงเท่านั้น');
+            // return redirect('/booking/' . $roomId)->with('message', 'ต้องจองเวลาเท่ากับ 1 ชั่วโมงเท่านั้น');
+            return redirect('/booking/' . $roomId)->with('message', '*');
         }
 
         if($bookingTimeFinish < $bookingTimeStart){
-            return redirect('/booking/' . $roomId)->with('message', 'กรอกเวลาผิดพลาด');
+            // return redirect('/booking/' . $roomId)->with('message', 'กรอกเวลาผิดพลาด');
+            return redirect('/booking/' . $roomId)->with('message', '*');
         }
 
-        $bookingTimes = now();
+        // $bookingTimes = now();
         $result = BookingRepository::addBooking(
             $bookingAgenda,
             $bookingDate,
             // $bookingTimes,
+            // $bookingTimes->format('H:i:s'),
             $bookingTimeStart->format('H:i:s'),
             $bookingTimeFinish->format('H:i:s'),
             $userId,
@@ -68,7 +75,8 @@ class BookingController extends Controller
             return redirect('/user/dashbord')->with('message', 'จองสำเร็จ');
         }
 
-        return redirect('/booking/' . $roomId)->with('message', 'ไม่สามารถจองได้เพราะทับเวลาคนอื่น');
+        // return redirect('/booking/' . $roomId)->with('message', 'ไม่สามารถจองได้เพราะทับเวลาคนอื่น');
+        return redirect('/booking/' . $roomId)->with('message', '*');
     }
 
 
